@@ -32,19 +32,18 @@ const InstrumentFamilies = function() {
 };
 
 
-InstrumentFamilies.prototype.bindEvents = function() {
-  PubSub.subscribe('MenuView:selected', (event) => {
-    const chosenFamily = event.detail;
-    const selectedFamily = this.findByName(chosenFamily);
-    PubSub.publish('InstrumentFamilies:planet-ready', selectedObject);
+InstrumentFamilies.prototype.bindEvents = function () {
+  PubSub.publish('InstrumentFamilies:data-ready', this.instrumentFamilies);
+
+  PubSub.subscribe('SelectView:change', (event) => {
+    const index = event.detail;
+    this.publishFamilyDetail(selectedIndex);
   });
 };
 
-InstrumentFamilies.prototype.findByName = function(searchName) {
-  const foundFamily = this.instrumentFamilies.find((currentFamily) => {
-    return currentFamily.name === searchName;
-  });
-  return foundFamily;
+InstrumentFamilies.prototype.publishFamilyDetail = function (familyIndex) {
+  const selectedFamily = this.instrumentFamilies[familyIndex];
+  PubSub.publish('InstrumentFamilies:selected-family-ready', selectedFamily)
 };
 
 module.exports = InstrumentFamilies;
