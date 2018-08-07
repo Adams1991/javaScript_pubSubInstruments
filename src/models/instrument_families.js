@@ -1,3 +1,6 @@
+const PubSub = require('../helpers/pub_sub.js');
+
+
 const InstrumentFamilies = function() {
   this.instrumentFamilies = [
     {
@@ -26,6 +29,22 @@ const InstrumentFamilies = function() {
       instruments: ['piano', 'organ', 'electronic keyboard', 'synthesizer']
     }
   ];
+};
+
+
+InstrumentFamilies.prototype.bindEvents = function() {
+  PubSub.subscribe('MenuView:selected', (event) => {
+    const chosenFamily = event.detail;
+    const selectedFamily = this.findByName(chosenFamily);
+    PubSub.publish('InstrumentFamilies:planet-ready', selectedObject);
+  });
+};
+
+InstrumentFamilies.prototype.findByName = function(searchName) {
+  const foundFamily = this.instrumentFamilies.find((currentFamily) => {
+    return currentFamily.name === searchName;
+  });
+  return foundFamily;
 };
 
 module.exports = InstrumentFamilies;
