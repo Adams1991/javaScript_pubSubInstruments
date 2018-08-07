@@ -37,7 +37,7 @@ InstrumentFamilies.prototype.bindEvents = function () {
 
   PubSub.subscribe('SelectView:change', (event) => {
     const index = event.detail;
-    this.publishFamilyDetail(selectedIndex);
+    this.publishFamilyDetail(index);
   });
 };
 

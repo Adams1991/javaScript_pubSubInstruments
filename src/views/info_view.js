@@ -1,17 +1,17 @@
 const PubSub = require('../helpers/pub_sub.js');
 
-const InfoVeiw = function (container) {
+const InfoView = function (container) {
   this.container = container;
 };
 
-InfoVeiw.prototype.bindEvents = function () {
-  PubSub.subscribe('InstrumentFamilies:selected-family-ready', (evt) => {
-    const instrumentFamily = evt.detail;
+InfoView.prototype.bindEvents = function () {
+  PubSub.subscribe('InstrumentFamilies:selected-family-ready', (event) => {
+    const instrumentFamily = event.detail;
     this.render(instrumentFamily);
   });
 };
 
-InfoVeiw.prototype.render = function (family) {
+InfoView.prototype.render = function (family) {
   this.container.innerHTML = '';
 
   const familyName = this.createElement('h2', family.name);
@@ -27,13 +27,13 @@ InfoVeiw.prototype.render = function (family) {
   this.container.appendChild(instrumentList);
 };
 
-InfoVeiw.prototype.createElement = function (elementType, text) {
+InfoView.prototype.createElement = function (elementType, text) {
   const element = document.createElement(elementType);
   element.textContent = text;
   return element;
 };
 
-InfoVeiw.prototype.createInstrumentList = function (instruments) {
+InfoView.prototype.createInstrumentList = function (instruments) {
   const list = document.createElement('ul');
 
   instruments.forEach((instrument) => {
@@ -45,4 +45,4 @@ InfoVeiw.prototype.createInstrumentList = function (instruments) {
   return list;
 };
 
-module.exports = InfoVeiw;
+module.exports = InfoView;
